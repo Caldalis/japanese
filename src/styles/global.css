@@ -121,3 +121,22 @@ button { font-family: inherit; }
 .toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--fg); color: var(--bg); padding: 8px 14px; border-radius: 20px; font-size: 13px; opacity: 0; transition: opacity .2s; pointer-events: none; z-index: 60; max-width: 90%; }
 .toast.on { opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .sheet, .toast, .kcell { transition: none; } }
+
+/* 例句卡：Markdown 里的 ```ja 代码块经 plugins/remark-ja.mjs 变成这个 */
+.jex { display: grid; gap: 10px; border: 1px solid var(--line); background: var(--surface); border-radius: 12px; padding: 10px 12px; margin: .8em 0; }
+.jex .it { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; }
+.jex .it + .it { border-top: 1px dashed var(--line); padding-top: 10px; }
+.jex .ja { font-family: var(--font-kana); font-size: 1.3rem; line-height: 1.9; }
+.jex .ja b { color: var(--hira); font-weight: 600; }
+.jex .ro { font-size: .8rem; color: var(--muted); }
+.jex .zh { font-size: .92rem; color: var(--muted); margin-top: 2px; }
+.jex .play { border: 1px solid var(--line); background: var(--surface); color: var(--accent); border-radius: 50%; width: 34px; height: 34px; cursor: pointer; font-size: 12px; flex-shrink: 0; }
+.jex .play:hover { border-color: var(--accent); }
+ruby { ruby-align: center; }
+rt { font-size: .5em; color: var(--muted); font-family: var(--font-kana); letter-spacing: 0; }
+.prose details { border: 1px solid var(--line); border-radius: 10px; padding: 6px 12px; margin: .8em 0; background: var(--surface); }
+.prose summary { cursor: pointer; font-weight: 500; color: var(--accent); }
+.prose details[open] summary { margin-bottom: 4px; }
+/* 行内反引号在本站约定为“日语词、语法点”，用假名字体和藍色底 */
+.prose code { font-family: var(--font-kana); font-size: 1em; background: var(--hira-soft); color: var(--hira); padding: 1px 6px; border-radius: 5px; }
+.prose th code, .prose td code { font-size: .95em; }

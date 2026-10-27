@@ -1,0 +1,28 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { site, url } from '../../site';
+import { STAGES } from '../../data/grammar';
+
+export async function getStaticPaths() {
+  const all = (await getCollection('grammar')).sort((a, b) => a.data.stage - b.data.stage || a.data.order - b.data.order);
+  return all.map((note, i) => ({ params: { id: note.id }, props: { note, prev: all[i - 1] ?? null, next: all[i + 1] ?? null } }));
+}
+const { note, prev, next } = Astro.props;
+const { Content } = await render(note);
+const stage = STAGES.find((s) => s.n === note.data.stage);
+const fmt = (d: Date) => d.toISOString().slice(0, 10);
+---
+<Base title={note.data.title} description={note.data.description}>
+  <nav class="text-sm text-muted mb-4"><a href={url('/grammar/')} class="hover:text-fg">语法</a> / 第 {note.data.stage} 单元 {stage?.title}</nav>
+  <div class="flex items-center gap-2 text-xs text-muted"><span class="px-1.5 py-0.5 rounded bg-raised">{note.data.level}</span>{note.data.tags.map((t) => <span>#{t}</span>)}</div>
+  <h1 class="text-2xl font-semibold mt-2" style="text-wrap: balance">{note.data.title}</h1>
+  <p class="ja text-hira text-xl sm:text-2xl mt-2 leading-snug" lang="ja">{note.data.pattern}</p>
+  <p class="text-muted mt-3 max-w-[42em]">{note.data.description}</p>
+  <div class="mt-2 text-xs text-muted tabular-nums">更新于 {fmt(note.data.updated)} · <a class="hover:text-fg" href={`${site.repo}/edit/main/src/content/grammar/${note.id}.md`} target="_blank" rel="noopener">在 GitHub 上修改</a></div>
+  <article class="prose mt-6"><Content /></article>
+  <nav class="mt-10 grid gap-2 sm:grid-cols-2" aria-label="上一条下一条">
+    {prev ? <a href={url(`/grammar/${prev.id}/`)} class="block rounded-2xl border border-line bg-surface p-4 no-underline text-fg hover:border-accent"><div class="text-xs text-muted">← 上一条</div><div class="font-medium mt-1">{prev.data.title}</div></a> : <span />}
+    {next ? <a href={url(`/grammar/${next.id}/`)} class="block rounded-2xl border border-line bg-surface p-4 no-underline text-fg hover:border-accent sm:text-right"><div class="text-xs text-muted">下一条 →</div><div class="font-medium mt-1">{next.data.title}</div></a> : <a href={url('/grammar/')} class="block rounded-2xl border border-dashed border-line p-4 no-underline text-muted sm:text-right">已经是最后一条，回到路线 →</a>}
+  </nav>
+</Base>

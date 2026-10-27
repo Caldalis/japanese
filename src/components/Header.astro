@@ -4,6 +4,7 @@ import ThemeToggle from './ThemeToggle.astro';
 const path = Astro.url.pathname;
 const nav = [
   { href: url('/kana/'), label: '五十音', match: '/kana/' },
+  { href: url('/grammar/'), label: '语法', match: '/grammar/' },
   { href: url('/notes/'), label: '笔记', match: '/notes/' },
 ];
 const active = (m: string) => path.includes(m);
@@ -12,12 +13,12 @@ const active = (m: string) => path.includes(m);
   <div class="gutter max-w-5xl mx-auto h-14 flex items-center gap-4">
     <a href={url('/')} class="flex items-center gap-2.5 no-underline text-fg shrink-0">
       <span class="ja grid place-items-center w-8 h-8 rounded-lg bg-hira text-on-accent text-lg leading-none" aria-hidden="true">あ</span>
-      <span class="font-semibold tracking-wide">{site.name}</span>
+      <span class="font-semibold tracking-wide max-[440px]:hidden">{site.name}</span>
     </a>
     <nav class="flex items-center gap-1 text-sm" aria-label="主导航">
       {nav.map((n) => (
         <a href={n.href} aria-current={active(n.match) ? 'page' : undefined}
-          class:list={['px-3 py-1.5 rounded-lg no-underline transition-colors', active(n.match) ? 'bg-hira-soft text-hira font-medium' : 'text-muted hover:text-fg hover:bg-raised']}>{n.label}</a>
+          class:list={['px-2.5 sm:px-3 py-1.5 rounded-lg no-underline whitespace-nowrap shrink-0 transition-colors', active(n.match) ? 'bg-hira-soft text-hira font-medium' : 'text-muted hover:text-fg hover:bg-raised']}>{n.label}</a>
       ))}
     </nav>
     <div class="ml-auto flex items-center gap-1">

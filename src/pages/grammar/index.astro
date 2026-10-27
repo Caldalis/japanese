@@ -1,0 +1,38 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { url } from '../../site';
+import { STAGES } from '../../data/grammar';
+const all = (await getCollection('grammar')).sort((a, b) => a.data.stage - b.data.stage || a.data.order - b.data.order);
+---
+<Base title="语法" description="按学习路线排列的日语语法笔记，每条有规则表、例句朗读、中国人易错点和练习。" wide>
+  <h1 class="text-xl font-semibold">语法</h1>
+  <p class="text-muted text-sm mt-1 max-w-[42em]">按学习路线排列，从第一条开始往下学。每条都讲透：是什么、怎么变、例句能点着听、中国人在哪里容易错、最后练三句。</p>
+  {STAGES.map((s) => { const notes = all.filter((n) => n.data.stage === s.n); return (
+    <section class="mt-9">
+      <div class="flex items-baseline gap-3">
+        <span class="text-xs text-muted tabular-nums tracking-wide">第 {s.n} 单元</span>
+        <h2 class="text-lg font-semibold">{s.title}</h2>
+        {notes.length === 0 && <span class="text-[11px] px-2 py-0.5 rounded-full bg-raised text-muted">规划中</span>}
+      </div>
+      <p class="text-muted text-sm mt-1 max-w-[42em]">{s.desc}</p>
+      {notes.length > 0 && (
+        <div class="mt-3 grid gap-2 sm:grid-cols-2">
+          {notes.map((n, i) => (
+            <a href={url(`/grammar/${n.id}/`)} class="group block rounded-2xl border border-line bg-surface p-4 no-underline text-fg hover:border-accent transition-colors">
+              <div class="flex items-center gap-2 text-xs text-muted tabular-nums"><span>{s.n}.{i + 1}</span><span class="ml-auto px-1.5 py-0.5 rounded bg-raised">{n.data.level}</span></div>
+              <div class="ja text-hira text-lg mt-1 leading-snug">{n.data.pattern}</div>
+              <div class="font-medium mt-1">{n.data.title}</div>
+              <p class="text-sm text-muted mt-1">{n.data.description}</p>
+            </a>
+          ))}
+        </div>
+      )}
+      {s.planned && s.planned.length > 0 && (
+        <ul class="mt-3 grid gap-1.5 sm:grid-cols-2 text-sm text-muted">
+          {s.planned.map((p) => <li class="rounded-xl border border-dashed border-line px-4 py-2.5">{p}</li>)}
+        </ul>
+      )}
+    </section>
+  ); })}
+</Base>
