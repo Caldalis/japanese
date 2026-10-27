@@ -1,0 +1,46 @@
+---
+import '../styles/global.css';
+import { site, url } from '../site';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props { title?: string; description?: string; wide?: boolean }
+const { title, description = site.description, wide = false } = Astro.props;
+const fullTitle = title ? `${title} · ${site.name}` : `${site.name} · ${site.tagline}`;
+---
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1f2327" media="(prefers-color-scheme: dark)" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content={site.name} />
+    <link rel="icon" type="image/svg+xml" href={url('/favicon.svg')} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&display=swap" />
+    <script is:inline>
+      // 在首屏渲染前套用用户选过的主题，避免闪一下
+      (function () { try { var t = localStorage.getItem('theme'); if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t; } catch (e) {} })();
+    </script>
+  </head>
+  <body class="min-h-dvh flex flex-col">
+    <Header />
+    <main class:list={['gutter w-full mx-auto flex-1 pt-5 pb-28', wide ? 'max-w-5xl' : 'max-w-3xl']}>
+      <slot />
+    </main>
+    <Footer />
+    <script>
+      // 静态页里带 data-say 的元素点一下就朗读；React 岛屿直接调 say()
+      import { say } from '../lib/speech';
+      document.addEventListener('click', (e) => {
+        const el = (e.target as HTMLElement).closest<HTMLElement>('[data-say]');
+        if (el?.dataset.say) say(el.dataset.say);
+      });
+    </script>
+  </body>
+</html>

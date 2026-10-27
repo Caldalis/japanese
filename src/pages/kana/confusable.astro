@@ -1,0 +1,25 @@
+---
+import Base from '../../layouts/Base.astro';
+import KanaNav from '../../components/KanaNav.astro';
+import { INFO, MIX, isHira } from '../../data/kana';
+---
+<Base title="易混字" description="14 组形近假名，用汉字字源分开。">
+  <KanaNav />
+  <h1 class="text-xl font-semibold">易混字</h1>
+  <p class="text-muted text-sm mt-1 mb-3">最容易混的组，用字源分开。点字听读音。</p>
+  <div class="grid gap-3 md:grid-cols-2">
+    {MIX.map(([ks, d]) => (
+      <div class="rounded-xl border border-line bg-surface p-3">
+        <div class="flex flex-wrap gap-2 mb-2">
+          {[...ks].map((c) => { const o = INFO[c]; const h = isHira(c); return (
+            <button type="button" class="kc" data-say={o.kata}>
+              <span class:list={['g', h ? 'hira' : 'kata']}>{c}</span>
+              <small>← {h ? o.hiraSrc : o.kataSrc}</small>
+            </button>
+          ); })}
+        </div>
+        <p class="text-sm">{d}</p>
+      </div>
+    ))}
+  </div>
+</Base>

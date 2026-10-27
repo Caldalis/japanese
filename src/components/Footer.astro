@@ -1,0 +1,11 @@
+---
+import { site } from '../site';
+---
+<footer class="border-t border-line mt-auto">
+  <div class="gutter max-w-5xl mx-auto py-6 text-xs text-muted flex flex-wrap gap-x-4 gap-y-1 items-center" style="padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px))">
+    <span>{site.name} · {site.tagline}</span>
+    <a href={site.repo} target="_blank" rel="noopener" class="hover:text-fg">GitHub</a>
+    <a href={`${site.repo}/issues`} target="_blank" rel="noopener" class="hover:text-fg">内容有误请提 Issue</a>
+    <span class="ml-auto">MIT License</span>
+  </div>
+</footer>

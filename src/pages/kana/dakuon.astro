@@ -1,0 +1,31 @@
+---
+import Base from '../../layouts/Base.astro';
+import KanaNav from '../../components/KanaNav.astro';
+import { DAKU, YOON } from '../../data/kana';
+---
+<Base title="浊音·拗音" description="浊音、半浊音和拗音的规则与读音。它们不是新字。">
+  <KanaNav />
+  <h1 class="text-xl font-semibold">浊音·半浊音</h1>
+  <p class="text-muted text-sm mt-1 mb-2">不是新字。右上角两点 ゛ 叫浊点，让 k s t h 变成 g z d b；小圆圈 ゜ 叫半浊点，只用在 は行，变成 p。点格子听读音。</p>
+  {DAKU.map(([t, h, k, r]) => { const rs = r.split(' '); return (
+    <div class="krow">
+      <div class="rl"><b>{h[0]}</b><span>{t}</span><button type="button" data-say={[...k].join('、')} aria-label={`连读 ${t}`}>▶</button></div>
+      {[...h].map((c, i) => (
+        <button type="button" class="kcell" data-say={k[i]}><span class="h">{c}</span><span class="kt">{k[i]}</span><span class="r">{rs[i]}</span></button>
+      ))}
+    </div>
+  ); })}
+  <div class="note">じ 和 ぢ、ず 和 づ 读音相同，现代日语几乎只用 じ ず。ぢ づ 只出现在少数复合词里，如 はなぢ 鼻血、つづく 继续。</div>
+
+  <h1 class="text-xl font-semibold mt-8">拗音</h1>
+  <p class="text-muted text-sm mt-1 mb-2">い段假名加小写的 ゃ ゅ ょ，两个字合读成一拍。写小写才是拗音：きや ki-ya 两拍，きゃ kya 一拍。</p>
+  {YOON.map(([t, h, k, r]) => { const hs = h.split(' '), ks = k.split(' '), rs = r.split(' '); return (
+    <div class="krow y">
+      <div class="rl"><b>{t}</b><span>+ゃゅょ</span><button type="button" data-say={ks.join('、')} aria-label={`连读 ${t} 行拗音`}>▶</button></div>
+      {hs.map((c, i) => (
+        <button type="button" class="kcell" data-say={ks[i]}><span class="h">{c}</span><span class="kt">{ks[i]}</span><span class="r">{rs[i]}</span></button>
+      ))}
+    </div>
+  ); })}
+  <div class="note">罗马字不规则的三组：しゃ sha、ちゃ cha、じゃ ja，不写 sya、tya、zya。常用词：おちゃ 茶、しゃしん 照片、きょう 今天、りょこう 旅行、じゅぎょう 课、ぎゅうにゅう 牛奶。</div>
+</Base>

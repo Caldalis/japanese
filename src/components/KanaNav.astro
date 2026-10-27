@@ -1,0 +1,19 @@
+---
+// 五十音模块的二级导航
+import { url } from '../site';
+const path = Astro.url.pathname.replace(/\/+$/, '') + '/';
+const tabs = [
+  { href: url('/kana/'), label: '清音' },
+  { href: url('/kana/dakuon/'), label: '浊音·拗音' },
+  { href: url('/kana/choon/'), label: '长音·促音' },
+  { href: url('/kana/confusable/'), label: '易混' },
+  { href: url('/kana/drill/'), label: '练习' },
+];
+const isActive = (h: string) => path === h.replace(/\/+$/, '') + '/';
+---
+<nav class="flex gap-1 overflow-x-auto -mx-1 px-1 pb-2 mb-3 border-b border-line [scrollbar-width:none]" aria-label="五十音分区">
+  {tabs.map((t) => (
+    <a href={t.href} aria-current={isActive(t.href) ? 'page' : undefined}
+      class:list={['shrink-0 px-3 py-1.5 rounded-full text-sm no-underline transition-colors', isActive(t.href) ? 'bg-accent text-on-accent font-medium' : 'text-muted hover:text-fg hover:bg-raised']}>{t.label}</a>
+  ))}
+</nav>

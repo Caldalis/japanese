@@ -1,0 +1,20 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { site, url } from '../../site';
+
+export async function getStaticPaths() {
+  const notes = await getCollection('notes');
+  return notes.map((n) => ({ params: { id: n.id }, props: { note: n } }));
+}
+const { note } = Astro.props;
+const { Content } = await render(note);
+const fmt = (d: Date) => d.toISOString().slice(0, 10);
+---
+<Base title={note.data.title} description={note.data.description}>
+  <nav class="text-sm text-muted mb-4"><a href={url('/notes/')} class="hover:text-fg">笔记</a> / {note.data.title}</nav>
+  <h1 class="text-2xl font-semibold" style="text-wrap: balance">{note.data.title}</h1>
+  <p class="text-muted mt-2 max-w-[42em]">{note.data.description}</p>
+  <div class="mt-2 text-xs text-muted tabular-nums">更新于 {fmt(note.data.updated)} · <a class="hover:text-fg" href={`${site.repo}/edit/main/src/content/notes/${note.id}.md`} target="_blank" rel="noopener">在 GitHub 上修改</a></div>
+  <article class="prose mt-6"><Content /></article>
+</Base>
