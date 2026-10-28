@@ -1,0 +1,49 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { url } from '../../site';
+import Flashcards from '../../components/react/Flashcards';
+import { POS_LABEL, toWords } from '../../lib/vocab';
+import { renderJa, speechText } from '../../../plugins/ja-text.mjs';
+
+export async function getStaticPaths() {
+  const decks = (await getCollection('vocab')).sort((a, b) => a.data.order - b.data.order);
+  return decks.map((deck, i) => ({ params: { id: deck.id }, props: { deck, prev: decks[i - 1] ?? null, next: decks[i + 1] ?? null } }));
+}
+const { deck, prev, next } = Astro.props;
+const words = toWords(deck.id, deck.data.words);
+---
+<Base title={deck.data.title} description={deck.data.desc} wide>
+  <nav class="text-sm text-muted mb-4"><a href={url('/vocab/')} class="hover:text-fg">词汇</a> / {deck.data.level}</nav>
+  <h1 class="text-2xl font-semibold">{deck.data.title}</h1>
+  <p class="text-muted mt-1 max-w-[42em]">{deck.data.desc}</p>
+
+  <h2 class="text-base font-semibold mt-6 mb-2">闪卡</h2>
+  <Flashcards client:load words={words} title={deck.data.title} />
+
+  <h2 class="text-base font-semibold mt-8 mb-2">词表 <span class="text-muted font-normal text-sm">点词听读音，点例句听整句</span></h2>
+  <div class="grid gap-1.5">
+    {words.map((w) => (
+      <div class="rounded-xl border border-line bg-surface px-3 py-2 grid grid-cols-[auto_minmax(0,1fr)] sm:grid-cols-[11rem_minmax(0,1fr)] gap-x-3 gap-y-1 items-start">
+        <button type="button" class="text-left" data-say={w.kana} aria-label={`朗读 ${w.word}`}>
+          <span class="ja text-hira text-xl leading-snug block" lang="ja">{w.word}</span>
+          <span class="ja text-muted text-sm block" lang="ja">{w.kana !== w.word ? w.kana : ' '}</span>
+        </button>
+        <div class="min-w-0">
+          <div><span class="text-[11px] px-1.5 py-0.5 rounded bg-raised text-muted mr-2 align-middle">{POS_LABEL[w.pos]}</span>{w.meaning}{w.note && <span class="text-kata text-sm ml-2">{w.note}</span>}</div>
+          {w.exJa && (
+            <button type="button" class="mt-0.5 text-left block w-full hover:text-hira" data-say={speechText(w.exJa)}>
+              <span class="ja text-[15px] leading-relaxed" lang="ja" set:html={renderJa(w.exJa)} />
+              {w.exZh && <span class="text-sm text-muted ml-2">{w.exZh}</span>}
+            </button>
+          )}
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <nav class="mt-10 grid gap-2 sm:grid-cols-2" aria-label="上一组下一组">
+    {prev ? <a href={url(`/vocab/${prev.id}/`)} class="block rounded-2xl border border-line bg-surface p-4 no-underline text-fg hover:border-accent"><div class="text-xs text-muted">← 上一组</div><div class="font-medium mt-1">{prev.data.title}</div></a> : <span />}
+    {next ? <a href={url(`/vocab/${next.id}/`)} class="block rounded-2xl border border-line bg-surface p-4 no-underline text-fg hover:border-accent sm:text-right"><div class="text-xs text-muted">下一组 →</div><div class="font-medium mt-1">{next.data.title}</div></a> : <a href={url('/vocab/')} class="block rounded-2xl border border-dashed border-line p-4 no-underline text-muted sm:text-right">回到词汇目录 →</a>}
+  </nav>
+</Base>

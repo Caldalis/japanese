@@ -4,6 +4,8 @@ import { getCollection } from 'astro:content';
 import { site, url } from '../site';
 import { STAGES } from '../data/grammar';
 const grammarCount = (await getCollection('grammar')).length;
+const vocabDecks = await getCollection('vocab');
+const vocabCount = vocabDecks.reduce((s, d) => s + d.data.words.length, 0);
 
 // 首页字源示意：真实数据，不是装饰
 const pairs = [
@@ -12,7 +14,7 @@ const pairs = [
 ];
 const modules = [
   { title: '五十音', desc: '46 个清音的汉字字源、读音、浊音拗音长音、14 组易混字对比，加随机测验。', href: url('/kana/'), status: '可用', count: '6 个分区' },
-  { title: '词汇', desc: 'N5 起步，按主题分组，闪卡加间隔重复，进度存在本机。', status: '规划中' },
+  { title: '词汇', desc: '按主题分组，每个词带读音、例句和音频。闪卡加间隔复习，有只听不看的听力模式，进度存在本机。', href: url('/vocab/'), status: '可用', count: `${vocabDecks.length} 组 ${vocabCount} 词` },
   { title: '语法', desc: 'N5 到 N2 的完整路线，每条讲透：规则表、例句朗读、中国人易错点、练一练。', href: url('/grammar/'), status: '可用', count: `已写 ${grammarCount} 条 · 路线 ${STAGES.length} 个单元到 N2` },
   { title: '汉字对照', desc: '中日同形词的意思差异：手紙 是信，勉強 是学习，娘 是女儿。', status: '规划中' },
 ] as { title: string; desc: string; href?: string; status: string; count?: string }[];

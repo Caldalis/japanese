@@ -1,5 +1,6 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { POS_LIST } from './lib/vocab';
 
 // 笔记：src/content/notes/ 下每个 .md 文件是一页，文件名就是网址
 const notes = defineCollection({
@@ -28,4 +29,18 @@ const grammar = defineCollection({
   }),
 });
 
-export const collections = { notes, grammar };
+// 词汇：src/data/vocab/*.json，每个文件一组词，见 src/lib/vocab.ts 的格式说明
+const vocab = defineCollection({
+  loader: glob({ pattern: '*.json', base: './src/data/vocab' }),
+  schema: z.object({
+    title: z.string(),
+    desc: z.string(),
+    level: z.enum(['N5', 'N4', 'N3', 'N2', 'N1']).default('N5'),
+    order: z.number(),
+    words: z.array(
+      z.tuple([z.string(), z.string(), z.enum(POS_LIST as [string, ...string[]]), z.string()]).rest(z.string()),
+    ),
+  }),
+});
+
+export const collections = { notes, grammar, vocab };

@@ -28,6 +28,13 @@ for (const [, , k] of DAKU) { [...k].forEach(add); add([...k].join('、')); }
 for (const [, , k] of YOON) { const ks = k.split(' '); ks.forEach(add); add(ks.join('、')); }
 for (const rule of CHOON) rule.examples.forEach((e) => add(e.word));
 
+// 词汇：每个词的读音和例句
+const vocabDir = 'src/data/vocab';
+if (fs.existsSync(vocabDir)) for (const f of fs.readdirSync(vocabDir).filter((f) => f.endsWith('.json'))) {
+  const deck = JSON.parse(fs.readFileSync(path.join(vocabDir, f), 'utf8'));
+  for (const [, kana, , , example] of deck.words) { add(kana); if (example) add(speechText(example.split('|')[0])); }
+}
+
 const mdFiles = ['src/content/grammar', 'src/content/notes'].flatMap((dir) =>
   fs.existsSync(dir) ? fs.readdirSync(dir).filter((f) => f.endsWith('.md')).map((f) => path.join(dir, f)) : []);
 for (const file of mdFiles) {
