@@ -8,7 +8,7 @@ import path from 'node:path';
 import { MsEdgeTTS, OUTPUT_FORMAT } from 'msedge-tts';
 import { audioKey, normalizeSpeech } from '../src/lib/audio-key.ts';
 import { CHOON, DAKU, SEION, YOON } from '../src/data/kana.ts';
-import { isJaChip, parseJaBlock, speechText } from '../plugins/ja-text.mjs';
+import { isJaChip, parseJaBlock, speechKana, speechText } from '../plugins/ja-text.mjs';
 
 const VOICE = 'ja-JP-NanamiNeural';
 const RATE = '-10%';
@@ -41,7 +41,7 @@ for (const file of mdFiles) {
   const body = fs.readFileSync(file, 'utf8').replace(/^---[\s\S]*?---/, '');
   for (const m of body.matchAll(/```ja\n([\s\S]*?)```/g)) parseJaBlock(m[1]).forEach(({ ja }) => add(speechText(ja)));
   const noBlocks = body.replace(/```[\s\S]*?```/g, '');
-  for (const m of noBlocks.matchAll(/`([^`\n]+)`/g)) if (isJaChip(m[1])) add(speechText(m[1]));
+  for (const m of noBlocks.matchAll(/`([^`\n]+)`/g)) if (isJaChip(m[1])) add(speechKana(m[1]));
 }
 
 // 2. 对比已有文件
