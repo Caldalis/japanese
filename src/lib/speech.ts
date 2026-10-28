@@ -1,41 +1,48 @@
-// 朗读：用系统自带的日语语音合成，无需联网也无需音频文件
-let voice: SpeechSynthesisVoice | null = null;
-let warned = false;
+// 朗读：优先播放预生成的 mp3（public/audio/，由 pnpm audio 生成），没有文件时退回系统语音。
+import { audioKey, normalizeSpeech } from './audio-key';
 
-function pickVoice() {
-  try {
-    voice = speechSynthesis.getVoices().find((v) => /^ja/i.test(v.lang)) ?? null;
-  } catch {
-    voice = null;
-  }
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+let player: HTMLAudioElement | null = null;
+let seq = 0;
+
+export function say(text: string) {
+  if (typeof window === 'undefined') return;
+  const t = normalizeSpeech(text);
+  if (!t) return;
+  const id = ++seq;
+  let fell = false;
+  const fallback = () => { if (fell || id !== seq) return; fell = true; speakWithSystemVoice(t); };
+
+  if (!player) { player = new Audio(); player.preload = 'auto'; }
+  const p = player;
+  try { p.pause(); } catch {}
+  try { speechSynthesis.cancel(); } catch {}
+  p.onerror = fallback;
+  p.src = `${base}/audio/${audioKey(t)}.mp3`;
+  p.play().catch(fallback);
 }
 
+// 退路：Web Speech API。国产安卓和微信内置浏览器经常没有日语语音，所以只当备用。
+let voice: SpeechSynthesisVoice | null = null;
+let warned = false;
+function pickVoice() {
+  try { voice = speechSynthesis.getVoices().find((v) => /^ja/i.test(v.lang)) ?? null; } catch { voice = null; }
+}
 if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
   pickVoice();
   speechSynthesis.addEventListener('voiceschanged', pickVoice);
 }
-
-export function say(text: string, rate = 0.85) {
-  if (typeof window === 'undefined') return;
-  if (!('speechSynthesis' in window)) {
-    toast('这个浏览器不支持朗读，请看罗马字');
-    return;
-  }
+function speakWithSystemVoice(t: string) {
+  if (!('speechSynthesis' in window)) { toast('这段还没有音频，浏览器也不支持朗读'); return; }
   if (!voice) pickVoice();
   try {
-    speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text);
+    const u = new SpeechSynthesisUtterance(t);
     u.lang = 'ja-JP';
     if (voice) u.voice = voice;
-    u.rate = rate;
+    u.rate = 0.85;
     speechSynthesis.speak(u);
-  } catch {
-    /* 某些内嵌浏览器会抛错，忽略 */
-  }
-  if (!voice && !warned) {
-    warned = true;
-    toast('没找到日语语音，读音可能不准。安装方法见“笔记”里的学习方法');
-  }
+  } catch {}
+  if (!voice && !warned) { warned = true; toast('这段还没有生成音频，系统也没有日语语音'); }
 }
 
 let timer: ReturnType<typeof setTimeout> | undefined;

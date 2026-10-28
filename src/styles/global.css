@@ -140,3 +140,8 @@ rt { font-size: .5em; color: var(--muted); font-family: var(--font-kana); letter
 /* 行内反引号在本站约定为“日语词、语法点”，用假名字体和藍色底 */
 .prose code { font-family: var(--font-kana); font-size: 1em; background: var(--hira-soft); color: var(--hira); padding: 1px 6px; border-radius: 5px; }
 .prose th code, .prose td code { font-size: .95em; }
+/* 可点读的词块：Markdown 里含日语的行内反引号会变成这个按钮 */
+.prose .jw { font: inherit; font-family: var(--font-kana); font-size: 1em; background: var(--hira-soft); color: var(--hira); padding: 1px 6px; border-radius: 5px; border: 0; cursor: pointer; line-height: 1.5; vertical-align: baseline; }
+.prose .jw::after { content: "▶"; font-size: .55em; opacity: .55; margin-left: .4em; vertical-align: middle; }
+.prose .jw:hover { background: var(--accent); color: var(--on-accent); }
+.prose .jw rt { color: inherit; opacity: .7; }

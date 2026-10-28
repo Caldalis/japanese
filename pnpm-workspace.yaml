@@ -1,0 +1,3 @@
+# msedge-tts 的 preinstall 只是检查包管理器，不需要运行
+allowBuilds:
+  msedge-tts: false
