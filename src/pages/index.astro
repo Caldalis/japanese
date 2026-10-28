@@ -1,6 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
 import { site, url } from '../site';
+import { STAGES } from '../data/grammar';
+const grammarCount = (await getCollection('grammar')).length;
 
 // 首页字源示意：真实数据，不是装饰
 const pairs = [
@@ -10,7 +13,7 @@ const pairs = [
 const modules = [
   { title: '五十音', desc: '46 个清音的汉字字源、读音、浊音拗音长音、14 组易混字对比，加随机测验。', href: url('/kana/'), status: '可用', count: '6 个分区' },
   { title: '词汇', desc: 'N5 起步，按主题分组，闪卡加间隔重复，进度存在本机。', status: '规划中' },
-  { title: '语法', desc: '按学习路线排列，从 〜は〜です 到形容词，每条讲透：规则表、例句朗读、中国人易错点、练一练。', href: url('/grammar/'), status: '可用', count: '3 个单元 10 条起步' },
+  { title: '语法', desc: 'N5 到 N2 的完整路线，每条讲透：规则表、例句朗读、中国人易错点、练一练。', href: url('/grammar/'), status: '可用', count: `已写 ${grammarCount} 条 · 路线 ${STAGES.length} 个单元到 N2` },
   { title: '汉字对照', desc: '中日同形词的意思差异：手紙 是信，勉強 是学习，娘 是女儿。', status: '规划中' },
 ] as { title: string; desc: string; href?: string; status: string; count?: string }[];
 ---

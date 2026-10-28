@@ -2,7 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import { site, url } from '../../site';
-import { STAGES } from '../../data/grammar';
+import { stageOf } from '../../data/grammar';
 
 export async function getStaticPaths() {
   const all = (await getCollection('grammar')).sort((a, b) => a.data.stage - b.data.stage || a.data.order - b.data.order);
@@ -10,7 +10,7 @@ export async function getStaticPaths() {
 }
 const { note, prev, next } = Astro.props;
 const { Content } = await render(note);
-const stage = STAGES.find((s) => s.n === note.data.stage);
+const stage = stageOf(note.data.stage);
 const fmt = (d: Date) => d.toISOString().slice(0, 10);
 ---
 <Base title={note.data.title} description={note.data.description}>
