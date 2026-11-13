@@ -59,6 +59,8 @@ button { font-family: inherit; }
 .mode-hira .kcell .kt, .mode-kata .kcell .h { display: none; }
 .mode-hira .kcell .h, .mode-kata .kcell .kt { font-size: 34px; }
 .hideroma .kcell .r { visibility: hidden; }
+.hideroma .kcell.revealed .r { visibility: visible; }
+.kcell.revealed { border-color: var(--accent); }
 .kgrid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; margin: 8px 0; }
 @media (min-width: 640px) { .kgrid { grid-template-columns: repeat(8, minmax(0, 1fr)); } }
 @media (max-width: 420px) { .kcell .h { font-size: 26px; } .kcell .kt { font-size: 19px; } }
