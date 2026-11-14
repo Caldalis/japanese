@@ -26,9 +26,9 @@ okane wa aru ni koshita koto wa nai
 junbi wa hayame ni shite oku ni koshita koto wa arimasen
 准备还是提早做好最好。
 
-安全(あんぜん)な ほうが いいに**越(こ)したことはない**。
-anzen na hou ga ii ni koshita koto wa nai
-安全一点当然更好。
+安全(あんぜん)に**越(こ)したことはない**。
+anzen ni koshita koto wa nai
+安全当然越好。
 ```
 
 ## 语感：最好，但不强求
@@ -67,6 +67,6 @@ keiken wa aru ni koshita koto wa nai ga, nakute mo daijoubu desu
 
 1. 早いに 越したことはありません。
 2. 準備が あるに 越したことはありません。
-3. お金は 多いに 越したことはありません。
+3. お金は あるに 越したことはありません。
 
 </details>

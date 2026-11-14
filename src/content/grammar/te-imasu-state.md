@@ -74,12 +74,16 @@ iie, shirimasen
 
 ## 已经去了
 
-`行っています` `来ています` 也是状态：人已经到了那边。
+`行っています` 是去了那边还没回来；`来ています` 是来了这边还在这里。
 
 ```ja
 兄(あに)は 今(いま) 中国(ちゅうごく)へ 行(い)って**います**。
 ani wa ima chuugoku e itte imasu
 哥哥现在在中国。（去了还没回来）
+
+田中(たなか)さんは もう 来(き)て**います**。
+tanaka san wa mou kite imasu
+田中已经来了。（来了还在这里）
 ```
 
 不是"正在去中国的路上"。
@@ -93,8 +97,8 @@ ani wa ima chuugoku e itte imasu
 oshigoto wa nani o shite imasu ka
 您做什么工作？
 
-貿易(ぼうえき)会社(がいしゃ)で 働(はたら)いて**います**。
-boueki gaisha de hataraite imasu
+貿易(ぼうえき)会社(かいしゃ)で 働(はたら)いて**います**。
+boueki kaisha de hataraite imasu
 在贸易公司工作。
 ```
 

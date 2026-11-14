@@ -53,9 +53,9 @@ ano hito wa nan to iu namae desu ka
 | `A は B という意味です` | A 是 B 的意思 |
 
 ```ja
-「おはよう」**というのは** 「早上好」**という意味(いみ)です**。
-ohayou to iu no wa zaoshanghao to iu imi desu
-おはよう 的意思是早上好。
+「おはよう」**というのは** 朝(あさ)の 挨拶(あいさつ)という 意味(いみ)です。
+ohayou to iu no wa asa no aisatsu to iu imi desu
+「おはよう」是早上打招呼的说法。
 
 この 漢字(かんじ)は どういう 意味(いみ)ですか。
 kono kanji wa dou iu imi desu ka

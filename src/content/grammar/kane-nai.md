@@ -26,8 +26,8 @@ kono mama dewa, kaisha ga taore kanenai
 sonna ni hataraitara, karada o kowashi kanenai
 那样工作的话，可能搞坏身体。
 
-嘘(うそ)を つくのは、信頼(しんらい)を 失(しつ)い**かねない**。
-uso o tsuku no wa, shinrai o ushinai kanenai
+嘘(うそ)を つくと、信頼(しんらい)を 失(しつ)い**かねない**。
+uso o tsuku to, shinrai o ushinai kanenai
 撒谎可能会失去信任。
 ```
 

@@ -23,19 +23,19 @@ tags: [可能形, 知觉]
 ## 見える 和 見られる
 
 ```ja
-ここから 富士山(ふじさん)が **見えます**。
+ここから 富士山(ふじさん)が **見(み)えます**。
 koko kara fujisan ga miemasu
 从这里看得见富士山。
 
-眼鏡(めがね)を かけないと、よく **見えません**。
+眼鏡(めがね)を かけないと、よく **見(み)えません**。
 megane o kakenai to, yoku miemasen
 不戴眼镜看不清。
 
-今晩(こんばん) テレビで 日本(にほん)の 映画(えいが)が **見られます**。
+今晩(こんばん) テレビで 日本(にほん)の 映画(えいが)が **見(み)られます**。
 konban terebi de nihon no eiga ga miraremasu
 今晚电视上能看日本电影。
 
-この 美術館(びじゅつかん)で ゴッホの 絵(え)が **見られます**。
+この 美術館(びじゅつかん)で ゴッホの 絵(え)が **見(み)られます**。
 kono bijutsukan de gohho no e ga miraremasu
 这家美术馆能看到梵高的画。
 ```
@@ -45,15 +45,15 @@ kono bijutsukan de gohho no e ga miraremasu
 ## 聞こえる 和 聞ける
 
 ```ja
-隣(となり)の 部屋(へや)から 音楽(おんがく)が **聞こえます**。
+隣(となり)の 部屋(へや)から 音楽(おんがく)が **聞(き)こえます**。
 tonari no heya kara ongaku ga kikoemasu
 隔壁房间传来音乐声。
 
-電話(でんわ)が 遠(とお)くて、よく **聞こえません**。
+電話(でんわ)が 遠(とお)くて、よく **聞(き)こえません**。
 denwa ga tookute, yoku kikoemasen
 电话声音远，听不清。
 
-この アプリで 日本(にほん)の ラジオが **聞けます**。
+この アプリで 日本(にほん)の ラジオが **聞(き)けます**。
 kono apuri de nihon no rajio ga kikemasu
 用这个应用能听日本的广播。
 ```

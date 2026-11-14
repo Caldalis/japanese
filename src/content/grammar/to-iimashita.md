@@ -14,11 +14,11 @@ tags: [简体, 引用]
 原话放在 `「」` 里，后面接 `と 言いました`。原话是什么体就保留什么体。
 
 ```ja
-田中(たなか)さんは 「明日(あした) 休(やす)みます」**と言いました**。
+田中(たなか)さんは 「明日(あした) 休(やす)みます」**と 言(い)いました**。
 tanaka san wa ashita yasumimasu to iimashita
 田中说"明天请假"。
 
-先生(せんせい)は 「宿題(しゅくだい)を 忘(わす)れないでください」**と言いました**。
+先生(せんせい)は 「宿題(しゅくだい)を 忘(わす)れないでください」**と 言(い)いました**。
 sensei wa shukudai o wasurenai de kudasai to iimashita
 老师说"别忘了作业"。
 ```
@@ -28,19 +28,19 @@ sensei wa shukudai o wasurenai de kudasai to iimashita
 把原话改成简体，接 `と 言いました`。规则和 と思います 一样，名词和な形容词加 だ。
 
 ```ja
-田中(たなか)さんは 明日(あした) 休(やす)む**と言いました**。
+田中(たなか)さんは 明日(あした) 休(やす)む**と 言(い)いました**。
 tanaka san wa ashita yasumu to iimashita
 田中说明天请假。
 
-母(はは)は 早(はや)く 帰(かえ)れ**と言いました**。
+母(はは)は 早(はや)く 帰(かえ)れ**と 言(い)いました**。
 haha wa hayaku kaere to iimashita
 妈妈说早点回来。
 
-彼(かれ)は 日本(にほん)の 料理(りょうり)は おいしい**と言いました**。
+彼(かれ)は 日本(にほん)の 料理(りょうり)は おいしい**と 言(い)いました**。
 kare wa nihon no ryouri wa oishii to iimashita
 他说日本菜好吃。
 
-王(おう)さんは 来週(らいしゅう)は 忙(いそが)しい**と言っていました**。
+王(おう)さんは 来週(らいしゅう)は 忙(いそが)しい**と 言(い)っていました**。
 ou san wa raishuu wa isogashii to itte imashita
 小王说下周很忙。
 ```
@@ -63,15 +63,15 @@ ou san wa raishuu wa isogashii to itte imashita
 | `〜と言(い)います` | 叫做 |
 
 ```ja
-田中(たなか)さんは 来月(らいげつ) 結婚(けっこん)する**と聞きました**。
+田中(たなか)さんは 来月(らいげつ) 結婚(けっこん)する**と 聞(き)きました**。
 tanaka san wa raigetsu kekkon suru to kikimashita
 听说田中下个月结婚。
 
-ここに 「禁煙(きんえん)」**と書いてあります**。
+ここに 「禁煙(きんえん)」**と 書(か)いてあります**。
 koko ni kin'en to kaite arimasu
 这里写着"禁烟"。
 
-これは 日本語(にほんご)で 何(なん)**と言いますか**。
+これは 日本語(にほんご)で 何(なん)**と 言(い)いますか**。
 kore wa nihongo de nan to iimasu ka
 这个用日语叫什么？
 ```

@@ -1,6 +1,6 @@
 ---
 title: 〜気味：有点……的倾向
-pattern: N 気味 / V ます形去ます 気味 ＋ です・の N・で ‖ 読音 ぎみ
+pattern: N 気味 / V ます形去ます 気味 ＋ です・の N・で ‖ 读音 ぎみ
 description: 身体和状态稍微往不好的方向偏了一点：有点感冒、有点累、有点胖了、工程有点拖。说的是"现在的状态"，多是坏事，程度轻。和 がち（经常）、っぽい（倾向）长得像，用在不同地方。
 level: N3
 stage: 25
@@ -30,11 +30,11 @@ tsukare gimi no toki wa muri o shinaide kudasai
 kouji wa yotei yori okure gimi desu
 工程比计划稍微拖了一点。
 
-試験(しけん)の 前(まえ)で、みんな 緊張(きんちょう)**気味(ぎみ)**でした。
-shiken no mae de, minna kinchou gimi deshita
+試験(しけん)の 前(まえ)に、みんな 緊張(きんちょう)**気味(ぎみ)**でした。
+shiken no mae ni, minna kinchou gimi deshita
 考试前，大家都有点紧张。
 
-最近(さいきん) 運動(うんどう)不足(ぶそく)**気味(ぎみ)**です。
+最近(さいきん) 運動(うんどう)不足(ふそく)**気味(ぎみ)**です。
 saikin undou busoku gimi desu
 最近有点缺乏运动。
 ```
@@ -50,7 +50,7 @@ saikin undou busoku gimi desu
 | `遅(おく)れ気味` | 有点拖后 |
 | `緊張(きんちょう)気味` | 有点紧张 |
 | `焦(あせ)り気味` | 有点着急 |
-| `不足(ぶそく)気味` | 有点不够 |
+| `不足(ふそく)気味` | 有点不够 |
 | `下(さ)がり気味` | 有下降的趋势 |
 
 ## 和 がち、っぽい 的区别

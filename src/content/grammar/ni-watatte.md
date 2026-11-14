@@ -70,7 +70,7 @@ choukikan ni watatte chousa shimashita
 
 <details><summary>答案</summary>
 
-1. この 工事は 五年に わたって 完成しました。
+1. 五年に わたる 工事が 完成しました。
 2. 被害は 全国に わたりました。
 3. 四回に わたる 話し合いの 結果、方針が 決まりました。
 

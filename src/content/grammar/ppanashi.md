@@ -22,9 +22,9 @@ mado o ake ppanashi de, dekakemashita
 terebi o tsuke ppanashi de nete shimaimashita
 开着电视睡着了。
 
-本(ほん)を 読(よ)み**っぱなし**で、返(かえ)しません。
-hon o yomi ppanashi de, kaeshimasen
-书一直看着不还。
+本(ほん)を 借(か)り**っぱなし**で、返(かえ)しません。
+hon o kari ppanashi de, kaeshimasen
+书借了一直不还。
 
 一時間(いちじかん)も 立(た)ち**っぱなし**でした。
 ichijikan mo tachi ppanashi deshita

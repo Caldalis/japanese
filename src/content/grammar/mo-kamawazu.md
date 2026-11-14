@@ -26,8 +26,8 @@ kiken mo kamawazu, kawa ni tobikomimashita
 ame mo kamawazu, soto de asonde imasu
 不顾下雨在外面玩。
 
-周(まわ)りに 迷惑(めいわく)も**かまわず**、電話(でんわ)で 話(はな)しています。
-mawari ni meiwaku mo kamawazu, denwa de hanashite imasu
+周(まわ)りに 迷惑(めいわく)を かけるのも**かまわず**、電話(でんわ)で 話(はな)しています。
+mawari ni meiwaku o kakeru no mo kamawazu, denwa de hanashite imasu
 不顾给周围添麻烦，一直在打电话。
 ```
 

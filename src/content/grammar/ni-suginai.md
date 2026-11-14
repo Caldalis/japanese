@@ -22,9 +22,9 @@ watashi wa gakusei ni sugimasen
 sore wa uwasa ni suginai
 那只不过是传闻。
 
-まだ 始(はじ)まったに**すぎません**。
-mada hajimatta ni sugimasen
-只不过是刚刚开始。
+これは まだ 始(はじ)まりに**すぎません**。
+kore wa mada hajimari ni sugimasen
+这只不过是开始。
 
 彼(かれ)の 意見(いけん)は 一(ひと)つの 考(かんが)えに**すぎない**。
 kare no iken wa hitotsu no kangae ni suginai

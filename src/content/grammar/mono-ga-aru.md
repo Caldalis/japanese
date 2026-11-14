@@ -18,9 +18,9 @@ tags: [文体, 评价, 书面]
 kono eiga ni wa, hito no kokoro o utsu mono ga aru
 这部电影有打动人心的东西。
 
-彼(かれ)の 話(はなし)には 説得力(せっとくりょく)が ある**ものがある**。
-kare no hanashi ni wa settokuryoku ga aru mono ga aru
-他的话确实有说服力。
+彼(かれ)の 話(はなし)には 人(ひと)を 納得(なっとく)させる**ものがある**。
+kare no hanashi ni wa hito o nattoku saseru mono ga aru
+他的话确实有让人信服的东西。
 
 この 景色(けしき)には 寂(さび)しさを 感(かん)じさせる**ものがある**。
 kono keshiki ni wa sabishisa o kanjisaseru mono ga aru
@@ -36,8 +36,8 @@ kare no ensou ni wa hito o hikitsukeru mono ga aru
 说话人承认对象身上有一种难以言说的力量、感觉或价值。
 
 ```ja
-この 写真(しゃしん)には、見(み)る 人(ひと)を 止(と)める**ものがある**。
-kono shashin ni wa, miru hito o tomeru mono ga aru
+この 写真(しゃしん)には、見(み)る 人(ひと)の 足(あし)を 止(と)めさせる**ものがある**。
+kono shashin ni wa, miru hito no ashi o tomesaseru mono ga aru
 这张照片有种让人驻足的力量。
 ```
 
@@ -66,7 +66,7 @@ kono shashin ni wa, miru hito o tomeru mono ga aru
 <details><summary>答案</summary>
 
 1. この 映画には 心を 打つ ものがあります。
-2. 彼の 話には 説得力が ある ものがあります。
-3. この 絵には 人を 止める ものがあります。
+2. 彼の 話には 人を 納得させる ものがあります。
+3. この 絵には 人を 引きつける ものがあります。
 
 </details>

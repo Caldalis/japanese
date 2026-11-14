@@ -36,9 +36,9 @@ beru ga naru ka naranai ka no uchi ni, kyoushitsu o demashita
 前项还没完全结束，后项已经发生。画面是"刚要……的一刹那"。
 
 ```ja
-食(た)べるか 食(た)べないかの**うちに**、皿(さら)が 空(あ)きました。
-taberu ka tabenai ka no uchi ni, sara ga akimashita
-还没怎么吃，盘子就空了。
+食(た)べ 終(お)えるか 終(お)えないかの**うちに**、店員(てんいん)が 皿(さら)を 下(さ)げました。
+tabe oeru ka oenai ka no uchi ni, ten'in ga sara o sagemashita
+还没吃完，店员就把盘子收走了。
 ```
 
 ## 和 たとたん 的区别

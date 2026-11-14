@@ -32,7 +32,7 @@ kyou wa chotto samui desu
 kono hon wa amari omoshirokunai desu
 这本书不太有意思。
 
-漢字(かんじ)が **全然** わかり**ません**。
+漢字(かんじ)が **全然(ぜんぜん)** わかり**ません**。
 kanji ga zenzen wakarimasen
 汉字完全不懂。
 ```
@@ -57,7 +57,7 @@ watashi wa itsumo shichiji ni okimasu
 yoku toshokan de benkyou shimasu
 经常在图书馆学习。
 
-**時々** 映画(えいが)を 見(み)ます。
+**時々(ときどき)** 映画(えいが)を 見(み)ます。
 tokidoki eiga o mimasu
 有时看电影。
 
@@ -65,7 +65,7 @@ tokidoki eiga o mimasu
 osake wa amari nomimasen
 不常喝酒。
 
-テレビは **全然** 見(み)**ません**。
+テレビは **全然(ぜんぜん)** 見(み)**ません**。
 terebi wa zenzen mimasen
 完全不看电视。
 ```
@@ -79,7 +79,7 @@ terebi wa zenzen mimasen
 kinou takusan tabemashita
 昨天吃了很多。
 
-公園(こうえん)に 人(ひと)が **大勢** います。
+公園(こうえん)に 人(ひと)が **大勢(おおぜい)** います。
 kouen ni hito ga oozei imasu
 公园里有很多人。
 ```
