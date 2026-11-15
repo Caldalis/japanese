@@ -150,3 +150,20 @@ rt { font-size: .5em; color: var(--muted); font-family: var(--font-kana); letter
 .prose .jw::after { content: "▶"; font-size: .55em; opacity: .55; margin-left: .4em; vertical-align: middle; }
 .prose .jw:hover { background: var(--accent); color: var(--on-accent); }
 .prose .jw rt { color: inherit; opacity: .7; }
+
+/* 读解文章：每句一张卡，下面是语法说明和逐词表 */
+.reading-sentence { margin: 2.2em 0; padding-bottom: 1.6em; border-bottom: 1px solid var(--line); }
+.reading-sentence h2 { margin-top: 0; }
+.reading-sentence .jex { margin: .6em 0; }
+.reading-sentence .jex .ja { font-size: 1.5rem; }
+.reading-grammar { border-left: 3px solid var(--accent); background: var(--surface); border-radius: 0 8px 8px 0; padding: 7px 12px; margin: 10px 0; }
+.reading-grammar b { color: var(--accent); font-size: 12px; }
+.reading-grammar p { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+.reading-words { margin: 8px 0 0; border-top: 1px solid var(--line); }
+.reading-word { padding: 8px 0; border-bottom: 1px dashed var(--line); }
+.reading-word-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px; }
+.reading-word-reading { color: var(--muted); font-size: 1rem; }
+.reading-word-pos { font-size: 11px; color: var(--muted); background: var(--raised); border-radius: 4px; padding: 1px 6px; }
+.reading-word-mean { font-weight: 500; }
+.reading-word-note { margin: 4px 0 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
+.reading-words .jw { font-size: 1rem; }

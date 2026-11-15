@@ -39,6 +39,17 @@ if (fs.existsSync(vocabDir)) for (const f of fs.readdirSync(vocabDir).filter((f)
   for (const [, kana, , , example] of deck.words) { add(kana); if (example) add(speechText(example.split('|')[0])); }
 }
 
+// 读解：每句的整句读音 + 每个词的读音
+const readingDir = 'src/data/reading';
+if (fs.existsSync(readingDir)) for (const f of fs.readdirSync(readingDir).filter((f) => f.endsWith('.json'))) {
+  const article = JSON.parse(fs.readFileSync(path.join(readingDir, f), 'utf8'));
+  for (const s of article.sentences) {
+    add(speechText(s.ja));
+    for (const w of s.words) add(w[1]);
+  }
+  for (const v of article.vocab ?? []) add(v[1]);
+}
+
 const mdFiles = ['src/content/grammar', 'src/content/notes'].flatMap((dir) =>
   fs.existsSync(dir) ? fs.readdirSync(dir).filter((f) => f.endsWith('.md')).map((f) => path.join(dir, f)) : []);
 for (const file of mdFiles) {

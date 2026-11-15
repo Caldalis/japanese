@@ -1,0 +1,74 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { url } from '../../site';
+import { stageOf } from '../../data/grammar';
+import { renderJa, speechText } from '../../../plugins/ja-text.mjs';
+
+export async function getStaticPaths() {
+  const all = (await getCollection('reading')).sort((a, b) => a.data.stage - b.data.stage || a.data.order - b.data.order);
+  return all.map((article, i) => ({ params: { id: article.id }, props: { article, prev: all[i - 1] ?? null, next: all[i + 1] ?? null } }));
+}
+const { article, prev, next } = Astro.props;
+const stage = stageOf(article.data.stage);
+const fmt = (d: Date) => d.toISOString().slice(0, 10);
+---
+<Base title={speechText(article.data.title)} description={article.data.desc}>
+  <nav class="text-sm text-muted mb-4"><a href={url('/grammar/')} class="hover:text-fg">语法</a> / <a href={url('/reading/')} class="hover:text-fg">读解</a> / 第 {article.data.stage} 单元 {stage?.title}</nav>
+  <div class="flex items-center gap-2 text-xs text-muted"><span class="px-1.5 py-0.5 rounded bg-raised">{article.data.level}</span><span>读解 · 第 {article.data.stage} 单元</span></div>
+  <h1 class="text-2xl font-semibold mt-2" style="text-wrap: balance" set:html={renderJa(article.data.title)}></h1>
+  <p class="text-muted mt-3 max-w-[42em]">{article.data.desc}</p>
+  <p class="text-sm text-muted mt-2 max-w-[42em]">{article.data.intro}</p>
+
+  <article class="prose mt-6">
+    {article.data.sentences.map((s, i) => (
+      <section class="reading-sentence">
+        <h2>第 {i + 1} 句</h2>
+        <div class="jex">
+          <div class="it">
+            <div>
+              <div class="ja" lang="ja" set:html={renderJa(s.ja)}></div>
+              <div class="ro">{s.ro}</div>
+              <div class="zh">{s.zh}</div>
+            </div>
+            <button type="button" class="play" data-say={speechText(s.ja)} aria-label="朗读这句">▶</button>
+          </div>
+        </div>
+        <div class="reading-grammar"><b>语法</b><p>{s.grammar}</p></div>
+        <div class="reading-words">
+          {s.words.map((w) => (
+            <div class="reading-word">
+              <div class="reading-word-head">
+                <button type="button" class="jw" lang="ja" data-say={w[1]} set:html={renderJa(w[0])} aria-label={`朗读 ${w[1]}`}></button>
+                <span class="reading-word-reading ja">{w[1]}</span>
+                <span class="reading-word-pos">{w[2]}</span>
+                <span class="reading-word-mean">{w[3]}</span>
+              </div>
+              <p class="reading-word-note">{w[4]}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    ))}
+
+    {article.data.grammarPoints.length > 0 && (
+      <section>
+        <h2>本篇语法</h2>
+        <ul>{article.data.grammarPoints.map((g) => <li>{g}</li>)}</ul>
+      </section>
+    )}
+    {article.data.vocab.length > 0 && (
+      <section>
+        <h2>本篇词汇</h2>
+        <ul>{article.data.vocab.map((v) => (
+          <li><button type="button" class="jw" lang="ja" data-say={v[1]} set:html={renderJa(v[0])}></button><span class="text-muted">（{v[1]}）</span> {v[2]}</li>
+        ))}</ul>
+      </section>
+    )}
+  </article>
+
+  <nav class="mt-10 grid gap-2 sm:grid-cols-2" aria-label="上一篇下一篇">
+    {prev ? <a href={url(`/reading/${prev.id}/`)} class="block rounded-2xl border border-line bg-surface p-4 no-underline text-fg hover:border-accent"><div class="text-xs text-muted">← 上一篇</div><div class="font-medium mt-1">{prev.data.title}</div></a> : <span />}
+    {next ? <a href={url(`/reading/${next.id}/`)} class="block rounded-2xl border border-line bg-surface p-4 no-underline text-fg hover:border-accent sm:text-right"><div class="text-xs text-muted">下一篇 →</div><div class="font-medium mt-1">{next.data.title}</div></a> : <a href={url('/reading/')} class="block rounded-2xl border border-dashed border-line p-4 no-underline text-muted sm:text-right">回到读解列表 →</a>}
+  </nav>
+</Base>

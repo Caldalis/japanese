@@ -29,6 +29,28 @@ const grammar = defineCollection({
   }),
 });
 
+// 读解：src/data/reading/*.json，每个文件一篇短文，按 stage 归到语法单元
+const reading = defineCollection({
+  loader: glob({ pattern: '*.json', base: './src/data/reading' }),
+  schema: z.object({
+    title: z.string(),
+    desc: z.string(),
+    level: z.enum(['N5', 'N4', 'N3', 'N2', 'N1']).default('N5'),
+    stage: z.number(),
+    order: z.number().default(1),
+    intro: z.string(),
+    sentences: z.array(z.object({
+      ja: z.string(),
+      ro: z.string(),
+      zh: z.string(),
+      grammar: z.string(),
+      words: z.array(z.tuple([z.string(), z.string(), z.string(), z.string(), z.string()])),
+    })),
+    grammarPoints: z.array(z.string()).default([]),
+    vocab: z.array(z.tuple([z.string(), z.string(), z.string()])).default([]),
+  }),
+});
+
 // 词汇：src/data/vocab/*.json，每个文件一组词，见 src/lib/vocab.ts 的格式说明
 const vocab = defineCollection({
   loader: glob({ pattern: '*.json', base: './src/data/vocab' }),
@@ -43,4 +65,4 @@ const vocab = defineCollection({
   }),
 });
 
-export const collections = { notes, grammar, vocab };
+export const collections = { notes, grammar, reading, vocab };

@@ -3,7 +3,9 @@ import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import { url } from '../../site';
 import { LEVELS, STAGES } from '../../data/grammar';
+import { renderJa } from '../../../plugins/ja-text.mjs';
 const all = (await getCollection('grammar')).sort((a, b) => a.data.stage - b.data.stage || a.data.order - b.data.order);
+const readings = (await getCollection('reading')).sort((a, b) => a.data.stage - b.data.stage || a.data.order - b.data.order);
 const count = (level: string) => {
   const stages = STAGES.filter((s) => s.level === level);
   const written = all.filter((n) => stages.some((s) => s.n === n.data.stage)).length;
@@ -52,6 +54,14 @@ const totalAll = LEVELS.reduce((s, l) => s + count(l.id).total, 0);
                   <div class="font-medium mt-1">{n.data.title}</div>
                   <p class="text-sm text-muted mt-1">{n.data.description}</p>
                 </a>
+              ))}
+            </div>
+          )}
+          {readings.filter((r) => r.data.stage === s.n).length > 0 && (
+            <div class="mt-3 flex flex-wrap items-center gap-2">
+              <span class="text-xs text-muted">读解</span>
+              {readings.filter((r) => r.data.stage === s.n).map((r) => (
+                <a href={url(`/reading/${r.id}/`)} class="rounded-lg border border-line bg-surface px-2.5 py-1 text-sm text-fg no-underline hover:border-accent" set:html={renderJa(r.data.title)}></a>
               ))}
             </div>
           )}

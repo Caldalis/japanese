@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import { site, url } from '../../site';
 import { stageOf } from '../../data/grammar';
+import { renderJa } from '../../../plugins/ja-text.mjs';
 
 export async function getStaticPaths() {
   const all = (await getCollection('grammar')).sort((a, b) => a.data.stage - b.data.stage || a.data.order - b.data.order);
@@ -11,6 +12,7 @@ export async function getStaticPaths() {
 const { note, prev, next } = Astro.props;
 const { Content } = await render(note);
 const stage = stageOf(note.data.stage);
+const readings = (await getCollection('reading')).filter((r) => r.data.stage === note.data.stage).sort((a, b) => a.data.order - b.data.order);
 const fmt = (d: Date) => d.toISOString().slice(0, 10);
 ---
 <Base title={note.data.title} description={note.data.description}>
@@ -21,6 +23,14 @@ const fmt = (d: Date) => d.toISOString().slice(0, 10);
   <p class="text-muted mt-3 max-w-[42em]">{note.data.description}</p>
   <div class="mt-2 text-xs text-muted tabular-nums">更新于 {fmt(note.data.updated)} · <a class="hover:text-fg" href={`${site.repo}/edit/main/src/content/grammar/${note.id}.md`} target="_blank" rel="noopener">在 GitHub 上修改</a></div>
   <article class="prose mt-6"><Content /></article>
+  {readings.length > 0 && (
+    <section class="mt-8">
+      <h2 class="text-base font-semibold">本单元读解</h2>
+      <div class="mt-2 flex flex-wrap gap-2">
+        {readings.map((r) => <a href={url(`/reading/${r.id}/`)} class="rounded-xl border border-line bg-surface px-3 py-2 text-sm text-fg no-underline hover:border-accent" set:html={renderJa(r.data.title)}></a>)}
+      </div>
+    </section>
+  )}
   <nav class="mt-10 grid gap-2 sm:grid-cols-2" aria-label="上一条下一条">
     {prev ? <a href={url(`/grammar/${prev.id}/`)} class="block rounded-2xl border border-line bg-surface p-4 no-underline text-fg hover:border-accent"><div class="text-xs text-muted">← 上一条</div><div class="font-medium mt-1">{prev.data.title}</div></a> : <span />}
     {next ? <a href={url(`/grammar/${next.id}/`)} class="block rounded-2xl border border-line bg-surface p-4 no-underline text-fg hover:border-accent sm:text-right"><div class="text-xs text-muted">下一条 →</div><div class="font-medium mt-1">{next.data.title}</div></a> : <a href={url('/grammar/')} class="block rounded-2xl border border-dashed border-line p-4 no-underline text-muted sm:text-right">已经是最后一条，回到路线 →</a>}
