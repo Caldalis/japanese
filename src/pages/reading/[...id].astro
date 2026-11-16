@@ -68,7 +68,7 @@ const fmt = (d: Date) => d.toISOString().slice(0, 10);
   </article>
 
   <nav class="mt-10 grid gap-2 sm:grid-cols-2" aria-label="上一篇下一篇">
-    {prev ? <a href={url(`/reading/${prev.id}/`)} class="block rounded-2xl border border-line bg-surface p-4 no-underline text-fg hover:border-accent"><div class="text-xs text-muted">← 上一篇</div><div class="font-medium mt-1">{prev.data.title}</div></a> : <span />}
-    {next ? <a href={url(`/reading/${next.id}/`)} class="block rounded-2xl border border-line bg-surface p-4 no-underline text-fg hover:border-accent sm:text-right"><div class="text-xs text-muted">下一篇 →</div><div class="font-medium mt-1">{next.data.title}</div></a> : <a href={url('/reading/')} class="block rounded-2xl border border-dashed border-line p-4 no-underline text-muted sm:text-right">回到读解列表 →</a>}
+    {prev ? <a href={url(`/reading/${prev.id}/`)} class="block rounded-2xl border border-line bg-surface p-4 no-underline text-fg hover:border-accent"><div class="text-xs text-muted">← 上一篇</div><div class="font-medium mt-1" set:html={renderJa(prev.data.title)}></div></a> : <span />}
+    {next ? <a href={url(`/reading/${next.id}/`)} class="block rounded-2xl border border-line bg-surface p-4 no-underline text-fg hover:border-accent sm:text-right"><div class="text-xs text-muted">下一篇 →</div><div class="font-medium mt-1" set:html={renderJa(next.data.title)}></div></a> : <a href={url('/reading/')} class="block rounded-2xl border border-dashed border-line p-4 no-underline text-muted sm:text-right">回到读解列表 →</a>}
   </nav>
 </Base>
