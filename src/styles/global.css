@@ -151,7 +151,22 @@ rt { font-size: .5em; color: var(--muted); font-family: var(--font-kana); letter
 .prose .jw:hover { background: var(--accent); color: var(--on-accent); }
 .prose .jw rt { color: inherit; opacity: .7; }
 
-/* 读解文章：每句一张卡，下面是语法说明和逐词表 */
+/* 读解文章：全文通读 + 每句一张卡，下方是语法说明和逐词表，点词弹讲解 */
+.reading-full { border: 1px solid var(--line); background: var(--surface); border-radius: 14px; padding: 14px 16px; margin-bottom: 1.8em; }
+.reading-full-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+.prose .reading-full-title { margin: 0; font-size: 1.05rem; }
+.prose .reading-full-tip { margin: 2px 0 0; font-size: 12.5px; color: var(--muted); }
+.reading-full-body { margin-top: 8px; }
+.reading-full-line { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 4px 0; border-bottom: 1px dashed var(--line); }
+.reading-full-line:last-child { border-bottom: 0; }
+.reading-full-ja { font-size: 1.15rem; line-height: 2; }
+.play-sm { border: 1px solid var(--line); background: var(--surface); color: var(--accent); border-radius: 50%; width: 26px; height: 26px; cursor: pointer; font-size: 10px; flex-shrink: 0; padding: 0; }
+.play-sm:hover { border-color: var(--accent); }
+.rtok { font: inherit; color: inherit; background: transparent; border: 0; padding: 0 1px; margin: 0; border-radius: 4px; cursor: pointer; display: inline; text-align: inherit; line-height: inherit; text-decoration: underline dotted var(--line); text-underline-offset: 4px; text-decoration-thickness: 1px; transition: background .12s, color .12s; }
+.rtok:hover { background: var(--hira-soft); color: var(--hira); text-decoration-color: var(--hira); }
+.rtok.active { background: var(--hira-soft); color: var(--hira); box-shadow: 0 0 0 1px var(--hira); text-decoration: none; }
+.rtok:hover rt, .rtok.active rt { color: inherit; opacity: .8; }
+.reading-hide-rt .reading-full rt, .reading-hide-rt .reading-sentence .jex rt { visibility: hidden; }
 .reading-sentence { margin: 2.2em 0; padding-bottom: 1.6em; border-bottom: 1px solid var(--line); }
 .reading-sentence h2 { margin-top: 0; }
 .reading-sentence .jex { margin: .6em 0; }
@@ -160,10 +175,24 @@ rt { font-size: .5em; color: var(--muted); font-family: var(--font-kana); letter
 .reading-grammar b { color: var(--accent); font-size: 12px; }
 .reading-grammar p { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
 .reading-words { margin: 8px 0 0; border-top: 1px solid var(--line); }
-.reading-word { padding: 8px 0; border-bottom: 1px dashed var(--line); }
+.reading-word { padding: 8px 0; border-bottom: 1px dashed var(--line); transition: background .15s; }
+.reading-word.active { background: var(--hira-soft); border-radius: 8px; padding-inline: 8px; margin-inline: -8px; }
 .reading-word-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px; }
 .reading-word-reading { color: var(--muted); font-size: 1rem; }
 .reading-word-pos { font-size: 11px; color: var(--muted); background: var(--raised); border-radius: 4px; padding: 1px 6px; }
 .reading-word-mean { font-weight: 500; }
 .reading-word-note { margin: 4px 0 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
 .reading-words .jw { font-size: 1rem; }
+.reading-pop { position: fixed; left: 0; right: 0; bottom: 0; z-index: 45; background: var(--surface); border-top: 1px solid var(--line); box-shadow: 0 -6px 24px rgba(0,0,0,.15); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 10px calc(12px + env(safe-area-inset-bottom, 0px)); transform: translateY(110%); transition: transform .2s; }
+.reading-pop.open { transform: none; }
+.reading-pop-inner { max-width: 48rem; margin: 0 auto; }
+.reading-pop-head { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.reading-pop-head .jw { font: inherit; font-family: var(--font-kana); font-size: 1.15rem; background: var(--hira-soft); color: var(--hira); padding: 2px 8px; border-radius: 6px; border: 0; cursor: pointer; line-height: 1.5; }
+.reading-pop-head .jw::after { content: "▶"; font-size: .55em; opacity: .6; margin-left: .4em; vertical-align: middle; }
+.reading-pop-head .jw:hover { background: var(--accent); color: var(--on-accent); }
+.reading-pop-actions { margin-left: auto; display: inline-flex; gap: 4px; }
+.reading-pop-note { margin: 6px 0 0; font-size: 13.5px; color: var(--fg); line-height: 1.55; }
+.reading-pop-foot { margin-top: 6px; display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 12px; color: var(--muted); }
+.reading-pop-foot a { color: var(--accent); text-decoration: none; white-space: nowrap; }
+.reading-pop-foot a:hover { text-decoration: underline; }
+@media (prefers-reduced-motion: reduce) { .reading-pop { transition: none; } }

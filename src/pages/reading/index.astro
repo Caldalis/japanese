@@ -9,7 +9,7 @@ const count = (stage: number) => all.filter((a) => a.data.stage === stage).lengt
 ---
 <Base title="读解" description="按语法单元编排的日语短文，每句都有读音、语法讲解和逐词注释。">
   <h1 class="text-xl font-semibold">读解</h1>
-  <p class="text-muted text-sm mt-1 max-w-[42em]">按语法单元编排的短文。每句可以点读，句子下面有语法讲解和逐词表；词语点一下听读音。先把文章读一遍，再回看语法单元，效果最好。</p>
+  <p class="text-muted text-sm mt-1 max-w-[42em]">按语法单元编排的短文。每句可以点读，点击句子里的词语就能直接听读音、看释义和讲解，下方还有逐句语法和逐词表。先把文章读一遍，再回看语法单元，效果最好。</p>
   <p class="text-xs text-muted mt-2 tabular-nums">已写 {all.length} 篇</p>
 
   {LEVELS.map((l) => {

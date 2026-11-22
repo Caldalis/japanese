@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import { url } from '../../site';
 import { stageOf } from '../../data/grammar';
+import { tokenizeSentence } from '../../lib/reading';
 import { renderJa, speechText } from '../../../plugins/ja-text.mjs';
 
 export async function getStaticPaths() {
@@ -11,7 +12,13 @@ export async function getStaticPaths() {
 }
 const { article, prev, next } = Astro.props;
 const stage = stageOf(article.data.stage);
-const fmt = (d: Date) => d.toISOString().slice(0, 10);
+const tokenized = article.data.sentences.map((s) => tokenizeSentence(s.ja, s.words));
+const inspectorJson = JSON.stringify(
+  article.data.sentences.map((s) => ({
+    zh: s.zh,
+    words: s.words.map((w) => [renderJa(w[0]), w[1], w[2], w[3], w[4]]),
+  })),
+).replace(/</g, '\\u003c');
 ---
 <Base title={speechText(article.data.title)} description={article.data.desc}>
   <nav class="text-sm text-muted mb-4"><a href={url('/grammar/')} class="hover:text-fg">语法</a> / <a href={url('/reading/')} class="hover:text-fg">读解</a> / 第 {article.data.stage} 单元 {stage?.title}</nav>
@@ -20,14 +27,48 @@ const fmt = (d: Date) => d.toISOString().slice(0, 10);
   <p class="text-muted mt-3 max-w-[42em]">{article.data.desc}</p>
   <p class="text-sm text-muted mt-2 max-w-[42em]">{article.data.intro}</p>
 
-  <article class="prose mt-6">
+  <article id="reading-article" class="prose mt-6">
+    <section class="reading-full" aria-label="全文通读">
+      <div class="reading-full-head">
+        <div>
+          <h2 class="reading-full-title">全文通读</h2>
+          <p class="reading-full-tip">点击文章里的任意词语，直接听读音并查看释义和讲解</p>
+        </div>
+        <button type="button" id="toggle-rt" class="btn sm" aria-pressed="false">隐藏注音</button>
+      </div>
+      <div class="reading-full-body">
+        {article.data.sentences.map((s, i) => (
+          <div class="reading-full-line">
+            <span class="reading-full-ja ja" lang="ja">
+              {tokenized[i].map((seg) =>
+                seg.type === 'word' ? (
+                  <button type="button" class="rtok" data-sent={i} data-word={seg.wordIndex} data-say={s.words[seg.wordIndex][1]} set:html={renderJa(seg.text)}></button>
+                ) : (
+                  <Fragment set:html={renderJa(seg.text)} />
+                ),
+              )}
+            </span>
+            <button type="button" class="play-sm" data-say={speechText(s.ja)} aria-label={`朗读第 ${i + 1} 句`} title={`朗读第 ${i + 1} 句`}>▶</button>
+          </div>
+        ))}
+      </div>
+    </section>
+
     {article.data.sentences.map((s, i) => (
-      <section class="reading-sentence">
+      <section class="reading-sentence" id={`s-${i + 1}`}>
         <h2>第 {i + 1} 句</h2>
         <div class="jex">
           <div class="it">
             <div>
-              <div class="ja" lang="ja" set:html={renderJa(s.ja)}></div>
+              <div class="ja" lang="ja">
+                {tokenized[i].map((seg) =>
+                  seg.type === 'word' ? (
+                    <button type="button" class="rtok" data-sent={i} data-word={seg.wordIndex} data-say={s.words[seg.wordIndex][1]} set:html={renderJa(seg.text)}></button>
+                  ) : (
+                    <Fragment set:html={renderJa(seg.text)} />
+                  ),
+                )}
+              </div>
               <div class="ro">{s.ro}</div>
               <div class="zh">{s.zh}</div>
             </div>
@@ -36,8 +77,8 @@ const fmt = (d: Date) => d.toISOString().slice(0, 10);
         </div>
         <div class="reading-grammar"><b>语法</b><p>{s.grammar}</p></div>
         <div class="reading-words">
-          {s.words.map((w) => (
-            <div class="reading-word">
+          {s.words.map((w, wi) => (
+            <div class="reading-word" data-word-row={`${i}-${wi}`}>
               <div class="reading-word-head">
                 <button type="button" class="jw" lang="ja" data-say={w[1]} set:html={renderJa(w[0])} aria-label={`朗读 ${w[1]}`}></button>
                 <span class="reading-word-reading ja">{w[1]}</span>
@@ -67,8 +108,129 @@ const fmt = (d: Date) => d.toISOString().slice(0, 10);
     )}
   </article>
 
+  <aside id="reading-pop" class="reading-pop" role="region" aria-label="词语讲解" aria-hidden="true">
+    <div class="reading-pop-inner">
+      <div class="reading-pop-head">
+        <button type="button" id="pop-word" class="jw" lang="ja" data-say=""></button>
+        <span id="pop-reading" class="reading-word-reading ja"></span>
+        <span id="pop-pos" class="reading-word-pos"></span>
+        <span id="pop-mean" class="reading-word-mean"></span>
+        <div class="reading-pop-actions">
+          <button type="button" id="pop-prev" class="btn sm" aria-label="上一个词">←</button>
+          <button type="button" id="pop-next" class="btn sm" aria-label="下一个词">→</button>
+          <button type="button" id="pop-close" class="btn sm" aria-label="关闭讲解">×</button>
+        </div>
+      </div>
+      <p id="pop-note" class="reading-pop-note"></p>
+      <div class="reading-pop-foot">
+        <span id="pop-ctx"></span>
+        <a id="pop-jump" href="#s-1">看这句语法 ↓</a>
+      </div>
+    </div>
+  </aside>
+
+  <script type="application/json" id="reading-data" set:html={inspectorJson}></script>
+
   <nav class="mt-10 grid gap-2 sm:grid-cols-2" aria-label="上一篇下一篇">
     {prev ? <a href={url(`/reading/${prev.id}/`)} class="block rounded-2xl border border-line bg-surface p-4 no-underline text-fg hover:border-accent"><div class="text-xs text-muted">← 上一篇</div><div class="font-medium mt-1" set:html={renderJa(prev.data.title)}></div></a> : <span />}
     {next ? <a href={url(`/reading/${next.id}/`)} class="block rounded-2xl border border-line bg-surface p-4 no-underline text-fg hover:border-accent sm:text-right"><div class="text-xs text-muted">下一篇 →</div><div class="font-medium mt-1" set:html={renderJa(next.data.title)}></div></a> : <a href={url('/reading/')} class="block rounded-2xl border border-dashed border-line p-4 no-underline text-muted sm:text-right">回到读解列表 →</a>}
   </nav>
+
+  <script>
+    import { say } from '../../lib/speech';
+
+    type PopSentence = { zh: string; words: [string, string, string, string, string][] };
+    const dataEl = document.getElementById('reading-data');
+    const pop = document.getElementById('reading-pop');
+    const articleEl = document.getElementById('reading-article');
+    const toggleRt = document.getElementById('toggle-rt');
+
+    if (toggleRt && articleEl) {
+      toggleRt.addEventListener('click', () => {
+        const hidden = articleEl.classList.toggle('reading-hide-rt');
+        toggleRt.setAttribute('aria-pressed', String(hidden));
+        toggleRt.textContent = hidden ? '显示注音' : '隐藏注音';
+      });
+    }
+
+    if (dataEl && pop) {
+      const sentences: PopSentence[] = JSON.parse(dataEl.textContent || '[]');
+      const popWord = document.getElementById('pop-word') as HTMLButtonElement;
+      const popReading = document.getElementById('pop-reading')!;
+      const popPos = document.getElementById('pop-pos')!;
+      const popMean = document.getElementById('pop-mean')!;
+      const popNote = document.getElementById('pop-note')!;
+      const popCtx = document.getElementById('pop-ctx')!;
+      const popJump = document.getElementById('pop-jump') as HTMLAnchorElement;
+      const popPrev = document.getElementById('pop-prev')!;
+      const popNext = document.getElementById('pop-next')!;
+      const popClose = document.getElementById('pop-close')!;
+
+      let cur: { s: number; w: number } | null = null;
+
+      const clearActive = () => {
+        document.querySelectorAll('.rtok.active, .reading-word.active').forEach((el) => el.classList.remove('active'));
+      };
+
+      const openWord = (sIdx: number, wIdx: number, speak: boolean) => {
+        const sent = sentences[sIdx];
+        const item = sent?.words[wIdx];
+        if (!item) return;
+        cur = { s: sIdx, w: wIdx };
+
+        clearActive();
+        document.querySelectorAll(`.rtok[data-sent="${sIdx}"][data-word="${wIdx}"]`).forEach((el) => el.classList.add('active'));
+        document.querySelector(`.reading-word[data-word-row="${sIdx}-${wIdx}"]`)?.classList.add('active');
+
+        popWord.innerHTML = item[0];
+        popWord.dataset.say = item[1];
+        popWord.setAttribute('aria-label', `朗读 ${item[1]}`);
+        popReading.textContent = item[1];
+        popPos.textContent = item[2];
+        popMean.textContent = item[3];
+        popNote.textContent = item[4];
+        popCtx.textContent = `第 ${sIdx + 1} 句 · ${sent.zh}`;
+        popJump.href = `#s-${sIdx + 1}`;
+
+        pop.classList.add('open');
+        pop.setAttribute('aria-hidden', 'false');
+        if (speak) say(item[1]);
+      };
+
+      const closePop = () => {
+        cur = null;
+        clearActive();
+        pop.classList.remove('open');
+        pop.setAttribute('aria-hidden', 'true');
+      };
+
+      const step = (delta: number) => {
+        if (!cur) return;
+        let { s, w } = cur;
+        w += delta;
+        while (w < 0 && s > 0) { s--; w = sentences[s].words.length - 1; }
+        while (s < sentences.length - 1 && w >= sentences[s].words.length) { s++; w = 0; }
+        if (sentences[s]?.words[w]) openWord(s, w, true);
+      };
+
+      document.addEventListener('click', (e) => {
+        const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('.rtok');
+        if (!btn) return;
+        const sIdx = Number(btn.dataset.sent);
+        const wIdx = Number(btn.dataset.word);
+        if (!Number.isNaN(sIdx) && !Number.isNaN(wIdx)) openWord(sIdx, wIdx, false);
+      });
+
+      popPrev.addEventListener('click', () => step(-1));
+      popNext.addEventListener('click', () => step(1));
+      popClose.addEventListener('click', closePop);
+
+      window.addEventListener('keydown', (e) => {
+        if (!cur) return;
+        if (e.key === 'Escape') closePop();
+        if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
+        if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
+      });
+    }
+  </script>
 </Base>
