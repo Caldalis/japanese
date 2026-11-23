@@ -7,7 +7,7 @@ export type SentenceSegment =
   | { type: 'word'; text: string; wordIndex: number };
 
 const HAS_KANJI = /[一-鿿々〆ヶ]/;
-const PUNCT_OR_SPACE = /^[\s、。？！「」『』・,.?!（）()〜～]*$/;
+const PUNCT_OR_SPACE = /^[\s、。？！「」『』・,.?!（）()〜～…]*$/;
 
 function findMatch(ja: string, word: ReadingWord, from: number): { idx: number; len: number } | null {
   const [surface, reading] = word;
